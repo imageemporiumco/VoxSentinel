@@ -1,0 +1,311 @@
+{
+  "history": [
+    {
+      "id": "anly_7najvgy1h",
+      "date": "2026-08-29T08:13:06.696Z",
+      "filename": "microphone_record.wav",
+      "sizeBytes": 115250,
+      "duration": 7.14,
+      "sampleRate": 44100,
+      "classification": "SUSPICIOUS",
+      "authenticityScore": 50,
+      "confidence": "HIGH",
+      "explanation": "Acoustic characteristics display moderate deviations from expected natural voice limits. Constrained pitch variation, flat jitter/shimmer coefficients, and narrow high-frequency profiles raise suspicion of cloning or vocoder adjustment.",
+      "quality": "EXCELLENT",
+      "reasons": [
+        "Unnatural F0 tracking jumps or frequency synthesis shifts",
+        "Erratic pitch jitter suggests speech tracking glitches or vocoder alignment errors",
+        "Extremely narrow spectral footprint indicating standard voice synthesis downsampling",
+        "Unnatural voiceless-to-voiced energy transitions"
+      ],
+      "supports": [
+        "Healthy conversational amplitude variance (shimmer: 15.93%)",
+        "Expected timbral variability in spectral centroids"
+      ],
+      "deductions": [
+        {
+          "feature": "Prosodic Variation",
+          "value": "97.1 Hz",
+          "weight": 8,
+          "reason": "Unnatural frequency swings"
+        },
+        {
+          "feature": "Micro-frequency Jitter",
+          "value": "26.73%",
+          "weight": 5,
+          "reason": "Excessive pitch jitter"
+        },
+        {
+          "feature": "Spectral Consistency",
+          "value": "2021 Hz",
+          "weight": 22,
+          "reason": "Heavy brickwall filtering detected below 6.5kHz"
+        },
+        {
+          "feature": "Temporal Dynamics",
+          "value": "0.042",
+          "weight": 5,
+          "reason": "Abnormally low zero-crossing rate"
+        }
+      ],
+      "indicators": [
+        {
+          "name": "Spectral Consistency",
+          "score": 30,
+          "status": "CRITICAL",
+          "explanation": "Spectral rolloff boundary lies at 2021 Hz.",
+          "importance": "HIGH"
+        },
+        {
+          "name": "Prosodic Variation",
+          "score": 70,
+          "status": "WARNING",
+          "explanation": "Pitch deviation is 97.1 Hz.",
+          "importance": "HIGH"
+        },
+        {
+          "name": "Harmonic Structure",
+          "score": 90,
+          "status": "SAFE",
+          "explanation": "Average spectral centroid is 1312 Hz.",
+          "importance": "MEDIUM"
+        },
+        {
+          "name": "Temporal Dynamics",
+          "score": 60,
+          "status": "WARNING",
+          "explanation": "Vocal energy boundaries conform to standard temporal envelopes.",
+          "importance": "MEDIUM"
+        },
+        {
+          "name": "Background Environment",
+          "score": 46,
+          "status": "CRITICAL",
+          "explanation": "Signal-to-noise ratio is estimated at 28.8 dB.",
+          "importance": "LOW"
+        },
+        {
+          "name": "Signal Artifacts",
+          "score": 80,
+          "status": "SAFE",
+          "explanation": "Acoustic verification checks clear.",
+          "importance": "HIGH"
+        }
+      ],
+      "metrics": {
+        "avgRMS": 0.045652972156289336,
+        "peakRMS": 0.3264343878973279,
+        "clippingPercentage": 0.0006351747048025559,
+        "speechPercentage": 46.6557911908646,
+        "estimatedSNR": 28.84355444121711,
+        "avgPitch": 184.2453824646898,
+        "pitchStd": 97.13482241692309,
+        "avgCentroid": 1312.3354107738414,
+        "avgRolloff": 2021.2600387893356,
+        "avgZCR": 0.041579026442307696
+      },
+      "pitches": [],
+      "rms": [],
+      "centroids": []
+    },
+    {
+      "id": "anly_d26igihir",
+      "date": "2026-08-29T08:02:36.615Z",
+      "filename": "microphone_record.wav",
+      "sizeBytes": 286232,
+      "duration": 17.759977324263037,
+      "sampleRate": 44100,
+      "classification": "SUSPICIOUS",
+      "authenticityScore": 60,
+      "confidence": "HIGH",
+      "explanation": "Acoustic characteristics display moderate deviations from expected natural voice limits. Constrained pitch variation and narrow high-frequency profiles raise suspicion of cloning or vocoder adjustment.",
+      "quality": "EXCELLENT",
+      "reasons": [
+        "Unnatural F0 tracking jumps or frequency synthesis shifts",
+        "Extremely narrow spectral footprint indicating standard voice synthesis downsampling"
+      ],
+      "supports": [
+        "Expected timbral variability in spectral centroids",
+        "Standard temporal transitions and noise envelopes"
+      ],
+      "deductions": [
+        {
+          "feature": "Prosodic Variation",
+          "value": "69.3 Hz",
+          "weight": 8,
+          "reason": "Unnatural frequency swings"
+        },
+        {
+          "feature": "Spectral Consistency",
+          "value": "4412 Hz",
+          "weight": 22,
+          "reason": "Heavy brickwall filtering detected below 6.5kHz"
+        }
+      ],
+      "indicators": [
+        {
+          "name": "Spectral Consistency",
+          "score": 30,
+          "status": "CRITICAL",
+          "explanation": "Spectral rolloff boundary lies at 4412 Hz.",
+          "importance": "HIGH"
+        },
+        {
+          "name": "Prosodic Variation",
+          "score": 95,
+          "status": "SAFE",
+          "explanation": "Pitch deviation is 69.3 Hz.",
+          "importance": "HIGH"
+        },
+        {
+          "name": "Harmonic Structure",
+          "score": 90,
+          "status": "SAFE",
+          "explanation": "Average spectral centroid is 2600 Hz.",
+          "importance": "MEDIUM"
+        },
+        {
+          "name": "Temporal Dynamics",
+          "score": 92,
+          "status": "SAFE",
+          "explanation": "Vocal energy boundaries conform to standard temporal envelopes.",
+          "importance": "MEDIUM"
+        },
+        {
+          "name": "Background Environment",
+          "score": 40,
+          "status": "CRITICAL",
+          "explanation": "Signal-to-noise ratio is estimated at 25.1 dB.",
+          "importance": "LOW"
+        },
+        {
+          "name": "Signal Artifacts",
+          "score": 100,
+          "status": "SAFE",
+          "explanation": "Acoustic verification checks clear.",
+          "importance": "HIGH"
+        }
+      ],
+      "metrics": {
+        "avgRMS": 0.05169330807833098,
+        "peakRMS": 0.3901294519267857,
+        "clippingPercentage": 0.00178750406976373,
+        "speechPercentage": 62.56544502617801,
+        "estimatedSNR": 25.124567805784825,
+        "avgPitch": 210.41864413323154,
+        "pitchStd": 69.30588023273643,
+        "avgCentroid": 2599.685941338594,
+        "avgRolloff": 4412.189359146182,
+        "avgZCR": 0.08897035989801255
+      },
+      "pitches": [],
+      "rms": [],
+      "centroids": []
+    },
+    {
+      "id": "anly_npb3n7mxs",
+      "date": "2026-08-29T08:01:32.735Z",
+      "filename": "microphone_record.wav",
+      "sizeBytes": 90134,
+      "duration": 5.579977324263038,
+      "sampleRate": 44100,
+      "classification": "LIKELY AI-GENERATED",
+      "authenticityScore": 47,
+      "confidence": "HIGH",
+      "explanation": "Multiple acoustic indicators strongly match synthetic voice generation characteristics. In particular, the combination of flat prosody (low F0 variance) and sharp spectral rolloff is characteristic of text-to-speech vocoders.",
+      "quality": "EXCELLENT",
+      "reasons": [
+        "Unnatural F0 tracking jumps or frequency synthesis shifts",
+        "Extremely narrow spectral footprint indicating standard voice synthesis downsampling",
+        "Muffled timbral structure or vocoder phase distortion",
+        "Unnatural voiceless-to-voiced energy transitions"
+      ],
+      "supports": [],
+      "deductions": [
+        {
+          "feature": "Prosodic Variation",
+          "value": "124.4 Hz",
+          "weight": 8,
+          "reason": "Unnatural frequency swings"
+        },
+        {
+          "feature": "Spectral Consistency",
+          "value": "1836 Hz",
+          "weight": 22,
+          "reason": "Heavy brickwall filtering detected below 6.5kHz"
+        },
+        {
+          "feature": "Harmonic Structure",
+          "value": "1127 Hz",
+          "weight": 8,
+          "reason": "Spectral centroid is abnormally low"
+        },
+        {
+          "feature": "Temporal Dynamics",
+          "value": "0.032",
+          "weight": 5,
+          "reason": "Abnormally low zero-crossing rate"
+        }
+      ],
+      "indicators": [
+        {
+          "name": "Spectral Consistency",
+          "score": 30,
+          "status": "CRITICAL",
+          "explanation": "Spectral rolloff boundary lies at 1836 Hz.",
+          "importance": "HIGH"
+        },
+        {
+          "name": "Prosodic Variation",
+          "score": 95,
+          "status": "SAFE",
+          "explanation": "Pitch deviation is 124.4 Hz.",
+          "importance": "HIGH"
+        },
+        {
+          "name": "Harmonic Structure",
+          "score": 50,
+          "status": "CRITICAL",
+          "explanation": "Average spectral centroid is 1127 Hz.",
+          "importance": "MEDIUM"
+        },
+        {
+          "name": "Temporal Dynamics",
+          "score": 60,
+          "status": "WARNING",
+          "explanation": "Vocal energy boundaries conform to standard temporal envelopes.",
+          "importance": "MEDIUM"
+        },
+        {
+          "name": "Background Environment",
+          "score": 48,
+          "status": "CRITICAL",
+          "explanation": "Signal-to-noise ratio is estimated at 30.3 dB.",
+          "importance": "LOW"
+        },
+        {
+          "name": "Signal Artifacts",
+          "score": 100,
+          "status": "SAFE",
+          "explanation": "Acoustic verification checks clear.",
+          "importance": "HIGH"
+        }
+      ],
+      "metrics": {
+        "avgRMS": 0.064988666866578,
+        "peakRMS": 0.43316232365330853,
+        "clippingPercentage": 0.00325101492622228,
+        "speechPercentage": 38.62212943632568,
+        "estimatedSNR": 30.306046347281466,
+        "avgPitch": 174.2614630278296,
+        "pitchStd": 124.3784695113745,
+        "avgCentroid": 1127.1852601757423,
+        "avgRolloff": 1835.5600717905406,
+        "avgZCR": 0.031550886824324324
+      },
+      "pitches": [],
+      "rms": [],
+      "centroids": []
+    }
+  ]
+}
