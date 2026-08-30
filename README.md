@@ -1,13 +1,25 @@
 # VoxSentinel 🛡️🎙️
 > **Advanced Voice-Cloning & Impersonation Detection Platform**
 
-VoxSentinel is a real-time audio forensic analysis and synthetic voice detection engine designed to identify AI voice cloning, deepfakes, and vocoder artifacts with high precision.
+[![Deploy to GitHub Pages](https://github.com/imageemporiumco/VoxSentinel/actions/workflows/deploy.yml/badge.svg)](https://github.com/imageemporiumco/VoxSentinel/actions/workflows/deploy.yml)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen)](https://imageemporiumco.github.io/VoxSentinel/)
+
+VoxSentinel is an in-browser real-time audio forensic analysis and synthetic voice detection platform designed to identify AI voice cloning, deepfakes, and vocoder artifacts with high precision.
+
+---
+
+## 🌐 Live Web App
+
+Try the live application directly in your browser without installing anything:  
+👉 **[https://imageemporiumco.github.io/VoxSentinel/](https://imageemporiumco.github.io/VoxSentinel/)**
+
+All audio processing and DSP calculations execute locally in your browser using client-side Web Audio API and Web Workers (no audio is uploaded or stored externally).
 
 ---
 
 ## 🚀 Key Features
 
-- **Genuine Digital Signal Processing (DSP)**:
+- **Genuine In-Browser Digital Signal Processing (DSP)**:
   - Radix-2 Fast Fourier Transform (FFT) analysis.
   - Formant tracking (F1, F2, F3) & spectral centroid calculation.
   - Micro-frequency Pitch Jitter and Shimmer extraction.
@@ -18,28 +30,28 @@ VoxSentinel is a real-time audio forensic analysis and synthetic voice detection
 - **Interactive Web Dashboard**:
   - Live microphone recording with real-time waveform and spectrogram visualization.
   - Drag-and-drop audio file support (`.wav`, `.mp3`, `.ogg`, `.m4a`, `.webm`, `.aac`).
-  - Interactive radar charts, spectral timelines, and historical analysis logs.
-- **RESTful API**:
-  - Easily integrate forensic analysis into automated pipelines and fraud prevention workflows.
+  - Interactive radar charts, spectral timelines, and local storage historical registry.
+- **Mode B: Speaker Impersonation Comparison**:
+  - Cross-compare reference speaker audio against a suspect sample.
+  - Real-time timbre overlap and spectral distance scoring.
+- **Flexible Deployment**:
+  - Runs 100% serverless on **GitHub Pages**.
+  - Optional full-stack deployment with Node.js/Express server.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Node.js, Express.js, Multer
-- **Audio & DSP**: Custom Radix-2 FFT, autocorrelation F0 pitch tracker, spectral flux & centroid processors
-- **Frontend**: Vanilla JavaScript (ES6+), HTML5 Canvas, Web Audio API, Web Workers
-- **Database**: Lightweight JSON persistence (`db.json`)
+- **Audio & DSP**: Web Audio API, Web Workers, Radix-2 FFT, Autocorrelation F0 pitch tracker, Spectral Flux & Centroid processors
+- **Frontend**: Vanilla JavaScript (ES6+), HTML5 Canvas, Modern CSS Design System
+- **Persistence**: LocalStorage with optional JSON database backend (`db.json`)
+- **Backend (Optional)**: Node.js, Express.js, Multer
 
 ---
 
-## 📦 Installation & Setup
+## 📦 Local Setup & Development
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v16.x or higher)
-- `npm` (v8.x or higher)
-
-### Quickstart
+### Running with Local Node.js Server:
 
 1. **Clone the repository:**
    ```bash
@@ -59,21 +71,6 @@ VoxSentinel is a real-time audio forensic analysis and synthetic voice detection
 
 4. **Access the application:**
    Open [http://localhost:8080](http://localhost:8080) in your browser.
-
----
-
-## 🔌 API Endpoints
-
-### 1. Analyze Audio
-- **POST** `/api/analyze`
-- **Content-Type**: `multipart/form-data` or `application/json`
-- **Body**: Audio file or raw client-extracted audio features
-- **Response**: Full forensic breakdown, classification, authenticity score, and confidence rating.
-
-### 2. Analysis History
-- **GET** `/api/history` — Retrieve previous scan records
-- **DELETE** `/api/history/:id` — Delete a scan record
-- **DELETE** `/api/history` — Clear all history records
 
 ---
 

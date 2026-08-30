@@ -16,6 +16,7 @@ if (!fs.existsSync(DB_PATH)) {
 // Middleware
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configure Multer for file uploads (storing in memory)

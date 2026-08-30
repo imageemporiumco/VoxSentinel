@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceGuard — Advanced Voice-Cloning & Impersonation Detection Platform</title>
+    <!-- Google Fonts Outfit & Share Tech Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Accessible announcer for screen readers -->
+    <div id="sr-announcer" class="sr-only" aria-live="polite" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="brand">
+            <svg class="brand-icon" viewBox="0 0 24 24">
+                <!-- Shield + Microphone representation -->
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 6a3 3 0 0 0-3 3v3a3 3 0 0 0 6 0V9a3 3 0 0 0-3-3z"/>
+                <path d="M8 11a4 4 0 0 0 8 0"/>
+                <line x1="12" y1="15" x2="12" y2="18"/>
+            </svg>
+            <span>VoiceGuard</span>
+        </div>
+        <nav aria-label="Main Navigation">
+            <a href="#detection-section" class="nav-link active">Detection</a>
+            <a href="#analysis-section" class="nav-link">Analysis</a>
+            <a href="#history-section" class="nav-link">History</a>
+            <a href="#reports-section" class="nav-link">Reports</a>
+            <a href="#methodology-section" class="nav-link">Methodology</a>
+            <a href="#about-section" class="nav-link">About</a>
+        </nav>
+        <div class="status-indicator">
+            <span>Detection Engine:</span>
+            <span class="status-dot"></span>
+            <span>Online</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- SECTION 1: MAIN DETECTION INTERFACE -->
+        <main id="detection-section" class="app-section active">
+            
+            <!-- Hero Header -->
+            <section class="hero">
+                <h1>Detect Voice Clones Before They Fool You</h1>
+                <p>Analyze voice recordings for synthetic speech, AI-generated characteristics, and impersonation signals using advanced audio intelligence.</p>
+                <div class="hero-ctas">
+                    <button class="btn btn-primary" onclick="document.getElementById('audio-input-panel').scrollIntoView({behavior: 'smooth'})">Analyze a Voice</button>
+                    <button class="btn btn-secondary" onclick="startRecording()">Record Voice</button>
+                </div>
+                <div class="trust-statement">
+                    <span class="trust-dot"></span>
+                    <span>AI-assisted voice authenticity analysis</span>
+                </div>
+            </section>
+
+            <!-- Presentation Demo Bar -->
+            <div class="demo-bar">
+                <span class="demo-title">DEMO MODE SAMPLES:</span>
+                <button class="btn-demo" data-demo="human">Presidential Keynote (Human)</button>
+                <button class="btn-demo" data-demo="synthetic">Cloned Voicemail Attack (AI)</button>
+                <button class="btn-demo" data-demo="suspicious">Forwarded WhatsApp Clip (Suspicious)</button>
+            </div>
+
+            <!-- Mode Selector Switch -->
+            <div class="mode-switch-container">
+                <div id="mode-a-tab" class="mode-tab active" role="tab" aria-selected="true">Mode A — Synthetic Voice Detection</div>
+                <div id="mode-b-tab" class="mode-tab" role="tab" aria-selected="false">Mode B — Speaker Impersonation Detection</div>
+            </div>
+
+            <div class="grid-2-3">
+                
+                <!-- LEFT COLUMN: INPUT CONTROLS -->
+                <div class="left-col">
+                    
+                    <!-- Input Selector Card -->
+                    <div class="panel" id="audio-input-panel">
+                        <h3 class="panel-title">Audio Input Experience</h3>
+                        
+                        <!-- MODE A UI: Single Voice Analysis -->
+                        <div id="mode-a-container">
+                            <div class="dropzone" id="dropzone">
+                                <div class="dropzone-icon">&#8682;</div>
+                                <p>Drag & drop voice recording here, or <strong>browse files</strong></p>
+                                <div class="dropzone-formats">Supports WAV, MP3, M4A, OGG up to 10MB</div>
+                                <input type="file" id="audio-file-input" accept="audio/*" style="display: none;">
+                            </div>
+
+                            <div style="text-align: center; margin: 15px 0; color: rgba(255,255,255,0.25); font-size: 12px; font-weight: bold; font-family: var(--font-mono);">OR RECORD LIVE</div>
+
+                            <button class="btn btn-secondary" id="btn-start-record" style="width: 100%; justify-content: center;">
+                                <span style="color: var(--color-red); font-size: 16px; margin-right: 4px;">&#9679;</span> Start Microphone Capture
+                            </button>
+
+                            <!-- Microphone status overlay -->
+                            <div class="record-hud" id="mic-record-status" style="display: none;">
+                                <div class="record-timer">
+                                    <span>RECORDING CAPTURE</span>
+                                    <span id="record-timer-val">00:00</span>
+                                </div>
+                                <div class="record-meter-bar">
+                                    <div class="record-meter-fill" id="record-meter-fill"></div>
+                                </div>
+                                <div id="record-studio-quality" style="font-size: 10px; font-weight: bold; margin-top: 4px;">Signal Quality: Excellent</div>
+                                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                                    <button class="btn btn-primary" id="btn-stop-record" style="flex: 1; padding: 8px 12px; font-size: 12px; display: none;">Stop</button>
+                                    <button class="btn btn-secondary" id="btn-cancel-record" style="flex: 1; padding: 8px 12px; font-size: 12px; display: none;">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MODE B UI: Reference vs Test Comparison -->
+                        <div id="mode-b-container" style="display: none;">
+                            <div class="comparison-card">
+                                <div class="comp-upload-row">
+                                    <div class="comp-box" id="ref-upload-card">
+                                        <div class="comp-box-icon">&#128100;</div>
+                                        <div class="comp-box-label">Reference Voice</div>
+                                        <div class="comp-filename" id="ref-filename">No Trusted File</div>
+                                        <input type="file" id="ref-file-input" accept="audio/*" style="display: none;">
+                                    </div>
+                                    <div class="comp-box" id="test-upload-card">
+                                        <div class="comp-box-icon">&#128266;</div>
+                                        <div class="comp-box-label">Test Voice</div>
+                                        <div class="comp-filename" id="test-filename">No Analysis File</div>
+                                        <input type="file" id="test-file-input" accept="audio/*" style="display: none;">
+                                    </div>
+                                </div>
+                                <button class="btn btn-run" id="btn-compare-voices" disabled>Compare Voice Profiles</button>
+                            </div>
+                        </div>
+
+                        <!-- Audio Playback Workspace (Appears after upload/record) -->
+                        <div class="audio-workspace" id="audio-workspace">
+                            <div class="audio-meta-deck">
+                                <div>File: <strong id="meta-filename">-</strong></div>
+                                <div>Size: <strong id="meta-filesize">-</strong></div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <canvas id="waveform-canvas" height="150"></canvas>
+                            </div>
+
+                            <div class="custom-player">
+                                <button class="player-btn" id="btn-play-audio"><span class="icon">&#9658;</span>Play</button>
+                                <button class="player-btn" id="btn-restart-audio"><span class="icon">&#8635;</span>Restart</button>
+                                <div class="player-time">
+                                    <span id="play-current-time">00:00</span> / <span id="play-duration">00:00</span>
+                                </div>
+                                <div class="player-controls-right">
+                                    <div class="player-volume-container">
+                                        <span style="font-size: 11px;">&#128266;</span>
+                                        <input type="range" class="player-volume-slider" id="player-volume" min="0" max="1" step="0.05" value="0.8">
+                                    </div>
+                                    <select class="player-speed-select" id="player-speed">
+                                        <option value="0.5">0.5x</option>
+                                        <option value="0.75">0.75x</option>
+                                        <option value="1.0" selected>1.0x</option>
+                                        <option value="1.25">1.25x</option>
+                                        <option value="1.5">1.5x</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-run" id="btn-run-analysis" disabled>Analyze Voice</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Engine Details panel -->
+                    <div class="panel">
+                        <h3 class="panel-title">AI Model Architecture</h3>
+                        <div class="config-row">
+                            <span class="config-lbl">Detection Engine</span>
+                            <span class="config-val">VoiceGuard Neural Predictor</span>
+                        </div>
+                        <div class="config-row">
+                            <span class="config-lbl">Engine Version</span>
+                            <span class="config-val">v1.4-Heuristic</span>
+                        </div>
+                        <div class="config-row">
+                            <span class="config-lbl">Processing Mode</span>
+                            <span class="config-val" id="engine-mode-text">Heuristic Demonstration</span>
+                        </div>
+                        <div class="config-row">
+                            <span class="config-lbl">Analysis Location</span>
+                            <span class="config-val">Local Web Worker (Browser-Bound)</span>
+                        </div>
+                        <div class="config-row">
+                            <span class="config-lbl">Model Weight Updates</span>
+                            <span class="config-val">Aug 2026 (Live Release)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: DYNAMIC RESULTS BOARD -->
+                <div class="right-col">
+                    
+                    <!-- 8-Stage Progress loading panel -->
+                    <div class="panel" id="analysis-steps-card" style="display: none;">
+                        <h3 class="panel-title">Forensic Engine Progress</h3>
+                        <div class="workflow-timeline">
+                            <div class="workflow-step" id="step-01">
+                                <div class="step-dot">01</div>
+                                <div class="step-name">Loading audio signal binaries</div>
+                            </div>
+                            <div class="workflow-step" id="step-02">
+                                <div class="step-dot">02</div>
+                                <div class="step-name">Audio normalization & clean-up</div>
+                            </div>
+                            <div class="workflow-step" id="step-03">
+                                <div class="step-dot">03</div>
+                                <div class="step-name">Voice Activity Detection VAD gating</div>
+                            </div>
+                            <div class="workflow-step" id="step-04">
+                                <div class="step-dot">04</div>
+                                <div class="step-name">Spectral & pitch autocorrelation extraction</div>
+                            </div>
+                            <div class="workflow-step" id="step-05">
+                                <div class="step-dot">05</div>
+                                <div class="step-name">Evaluating synthesis vocoder phase locks</div>
+                            </div>
+                            <div class="workflow-step" id="step-06">
+                                <div class="step-dot">06</div>
+                                <div class="step-name">Acoustic feature evidence aggregation</div>
+                            </div>
+                            <div class="workflow-step" id="step-07">
+                                <div class="step-dot">07</div>
+                                <div class="step-name">Signal quality & SNR confidence bounds</div>
+                            </div>
+                            <div class="workflow-step" id="step-08">
+                                <div class="step-dot">08</div>
+                                <div class="step-name">Compiling forensic authenticity verdict</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Dashboard Card (Shown after analysis completes) -->
+                    <div id="results-dashboard" style="display: none;">
+                        
+                        <!-- Primary Score Panel -->
+                        <div class="panel">
+                            <h3 class="panel-title">Main Assessment Verdict</h3>
+                            <div class="result-grid-header">
+                                <div class="gauge-box">
+                                    <canvas id="authenticity-gauge" width="220" height="220"></canvas>
+                                </div>
+                                <div class="verdict-box">
+                                    <span id="result-classification" class="result-tag tag-green">HUMAN</span>
+                                    <span id="result-confidence" class="verdict-confidence">Confidence: HIGH</span>
+                                    <p id="result-explanation" class="verdict-explanation">The analyzed recording contains characteristics that are consistent with natural human speech.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mode B Comparison Results Panel (Appears after Comparison) -->
+                        <div class="panel comparison-results-card" id="comparison-results-card">
+                            <h3 class="panel-title">Voice Comparison Analytics</h3>
+                            <div class="comp-score-section">
+                                <div class="similarity-score-dial">
+                                    <div class="similarity-score-num" id="comp-similarity-score">87%</div>
+                                    <div class="similarity-score-lbl">Speaker Similarity</div>
+                                </div>
+                                <div class="comp-metrics-deck">
+                                    <div class="comp-metric-row">
+                                        <div class="comp-metric-hdr">
+                                            <span>Pitch Matching Similarity</span>
+                                            <span id="comp-pitch-val">87%</span>
+                                        </div>
+                                        <div class="comp-metric-fill-bar">
+                                            <div class="comp-metric-fill" id="comp-pitch-sim" style="width: 87%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="comp-metric-row">
+                                        <div class="comp-metric-hdr">
+                                            <span>Timbre Overlay resonance</span>
+                                            <span id="comp-timbre-val">84%</span>
+                                        </div>
+                                        <div class="comp-metric-fill-bar">
+                                            <div class="comp-metric-fill" id="comp-timbre-sim" style="width: 84%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="comp-metric-row">
+                                        <div class="comp-metric-hdr">
+                                            <span>Envelope & timing cadence</span>
+                                            <span id="comp-envelope-val">90%</span>
+                                        </div>
+                                        <div class="comp-metric-fill-bar">
+                                            <div class="comp-metric-fill" id="comp-envelope-sim" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 25px;">
+                                <div style="font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px;">Timbre overlay distributions</div>
+                                <div class="chart-container">
+                                    <canvas id="timbre-overlap-canvas" height="140"></canvas>
+                                </div>
+                            </div>
+                            <p style="font-size: 12.5px; color: rgba(255,255,255,0.7); line-height: 1.5; margin-top: 15px;" id="comp-description">Calculated similarity indicates that the speech features overlap significantly.</p>
+                        </div>
+
+                        <!-- Explanatory Contribution bars -->
+                        <div class="panel">
+                            <h3 class="panel-title">Explainable AI — Contribution Factors</h3>
+                            <div class="explain-factors-container">
+                                <div class="factor-box positive">
+                                    <h4>Evidence Supporting Human</h4>
+                                    <ul id="supports-list">
+                                        <li><span class="bullet positive">&#10003;</span> Natural pitch variance (prosodic shift)</li>
+                                    </ul>
+                                </div>
+                                <div class="factor-box negative">
+                                    <h4>Evidence Raising Suspicion</h4>
+                                    <ul id="suspicions-list">
+                                        <li><span class="bullet neutral">&#8212;</span> None</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Audio Quality Card -->
+                        <div class="panel">
+                            <h3 class="panel-title">Signal Quality Assessment</h3>
+                            <div class="quality-assessment-grid">
+                                <div class="quality-card">
+                                    <div class="quality-card-title">Signal-to-Noise Ratio</div>
+                                    <div class="quality-row">
+                                        <span class="quality-val" id="quality-snr-val">38.2 dB</span>
+                                    </div>
+                                    <div class="quality-progress-bar">
+                                        <div class="quality-progress-fill bg-green" id="quality-snr-fill" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="quality-card">
+                                    <div class="quality-card-title">Audio Duration</div>
+                                    <div class="quality-row">
+                                        <span class="quality-val" id="quality-dur-val">12.4s</span>
+                                    </div>
+                                    <div class="quality-progress-bar">
+                                        <div class="quality-progress-fill bg-green" id="quality-dur-fill" style="width: 70%"></div>
+                                    </div>
+                                </div>
+                                <div class="quality-card">
+                                    <div class="quality-card-title">Peak Clipping</div>
+                                    <div class="quality-row">
+                                        <span class="quality-val" id="quality-clip-val">0.00%</span>
+                                    </div>
+                                    <div class="quality-progress-bar">
+                                        <div class="quality-progress-fill bg-green" id="quality-clip-fill" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informational message if nothing loaded -->
+                    <div class="panel" id="empty-state-card" style="display: block; text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.35);">
+                        <div style="font-size: 48px; margin-bottom: 15px;">&#128080;</div>
+                        <h4 style="font-size: 16px; color: #ffffff; margin-bottom: 6px;">No Active Voice Analysis</h4>
+                        <p style="font-size: 13px; max-width: 320px; margin: 0 auto;">Upload a recording, record through your microphone, or choose a demo profile to initiate inspection.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOWER FULL-WIDTH WORKSPACE DETAILS -->
+            <div id="lower-analysis-deck" style="margin-top: 15px;">
+                
+                <!-- Spectrogram Card -->
+                <div class="panel">
+                    <h3 class="panel-title">
+                        <span>2D Logarithmic Spectrogram (STFT FFT)</span>
+                        <span style="font-size: 10px; font-family: var(--font-mono); color: rgba(255,255,255,0.3);">Hover to inspect frequency magnitude</span>
+                    </h3>
+                    <div class="chart-container" style="background: #060913;">
+                        <canvas id="spectrogram-canvas" height="240"></canvas>
+                    </div>
+                </div>
+
+                <!-- Evidence Indicator Cards Deck -->
+                <div class="panel">
+                    <h3 class="panel-title">Forensic Evidence Indicator Weights</h3>
+                    <div class="indicator-deck" id="indicators-deck">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- Technical Audio Metrics Table -->
+                <div class="panel">
+                    <h3 class="panel-title">Technical Audio Analysis Parameters</h3>
+                    <div class="metrics-grid-table">
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Duration</span>
+                            <span class="metric-val" id="tech-duration">0.00s</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Sample Rate</span>
+                            <span class="metric-val" id="tech-samplerate">0 Hz</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">RMS Energy</span>
+                            <span class="metric-val" id="tech-rms">0.0000</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Peak Amplitude</span>
+                            <span class="metric-val" id="tech-peak">0.0000</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Zero Crossing Rate</span>
+                            <span class="metric-val" id="tech-zcr">0.0000</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Est. SNR dB</span>
+                            <span class="metric-val" id="tech-snr">0.0 dB</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Avg Fundamental (F0)</span>
+                            <span class="metric-val" id="tech-pitch">0.0 Hz</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Pitch Std Dev</span>
+                            <span class="metric-val" id="tech-pitchstd">0.0 Hz</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Micro-jitter</span>
+                            <span class="metric-val" id="tech-jitter">0.00%</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Micro-shimmer</span>
+                            <span class="metric-val" id="tech-shimmer">0.00%</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Spectral Flatness</span>
+                            <span class="metric-val" id="tech-flatness">0.000</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Spectral Centroid</span>
+                            <span class="metric-val" id="tech-centroid">0.0 Hz</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Spectral Rolloff</span>
+                            <span class="metric-val" id="tech-rolloff">0.0 Hz</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Speech Percentage</span>
+                            <span class="metric-val" id="tech-speechpercent">0.0%</span>
+                        </div>
+                        <div class="metric-cell">
+                            <span class="metric-lbl">Signal Clipping</span>
+                            <span class="metric-val" id="tech-clipping">0.00%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speech Segment Timeline -->
+                <div class="panel">
+                    <h3 class="panel-title">Speech Segment Timeline Gating</h3>
+                    <div class="segment-timeline-container">
+                        <div class="segment-timeline-track" id="segment-timeline-bar">
+                            <!-- Filled dynamically -->
+                        </div>
+                        <div style="display: flex; gap: 20px; font-size: 10px; color: rgba(255,255,255,0.4); font-family: var(--font-mono); margin-top: 2px;">
+                            <div><span class="status-dot bg-green" style="box-shadow:none; width:6px; height:6px;"></span> Human Speech</div>
+                            <div><span class="status-dot bg-amber" style="box-shadow:none; width:6px; height:6px;"></span> Suspicious segment</div>
+                            <div><span class="status-dot bg-red" style="box-shadow:none; width:6px; height:6px;"></span> Synthetic Vocoder locked</div>
+                            <div><span class="status-dot" style="background:rgba(255,255,255,0.1); box-shadow:none; width:6px; height:6px;"></span> Gated Silence</div>
+                        </div>
+                        <div class="segment-list" id="segment-list" style="margin-top: 10px;">
+                            <!-- Dynamic rows -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- SECTION 2: EXPORT / REPORTS PANEL -->
+        <section id="reports-section" class="app-section">
+            <div class="panel">
+                <h3 class="panel-title">Forensic Assessment Exporter</h3>
+                <p class="info-para">Export high-fidelity diagnostic reports suitable for corporate security briefings, legal archives, or research reviews.</p>
+                <div style="display: flex; gap: 15px; margin-top: 20px;">
+                    <button class="btn btn-primary" id="btn-export-pdf" onclick="exportPdfReport()" disabled>Export PDF Report</button>
+                    <button class="btn btn-secondary" id="btn-export-json" onclick="exportJsonReport()" disabled>Export structured JSON</button>
+                    <button class="btn btn-secondary" id="btn-export-csv" onclick="exportCsvReport()">Export Metrics CSV</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: RECENT ANALYSIS HISTORY -->
+        <section id="history-section" class="app-section">
+            <div class="panel">
+                <h3 class="panel-title">Acoustic Analysis History Registry</h3>
+                <p class="info-para">Contains a persistent record of the voice assessments conducted on this system. Audio files are processed in-memory and are not permanently saved on server filesystems to respect privacy directives.</p>
+                
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Analysis Date</th>
+                            <th>Recording Identifier</th>
+                            <th>Duration</th>
+                            <th>Verdict</th>
+                            <th>Authenticity Score</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        <!-- Filled dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION 4: DETECTION METHODOLOGY -->
+        <section id="methodology-section" class="app-section">
+            <div class="panel">
+                <h3 class="panel-title">Scientific Detection Methodology</h3>
+                
+                <h4 style="margin-bottom: 8px; color: var(--color-cyan);">Autocorrelation Prosodic Analysis (F0 Tracking)</h4>
+                <p class="info-para">Human conversational speech carries natural vocal folds modulation (prosodic micro-variations). We track the fundamental frequency (F0) in 30ms sliding windows. Cloned voices generated from Text-To-Speech (TTS) models often exhibit flat prosodic pitch ranges, or contain abrupt frequency steps representing pitch tracking faults in vocoder synthesis models.</p>
+
+                <h4 style="margin-bottom: 8px; color: var(--color-cyan);">Brickwall Spectral Boundary limits</h4>
+                <p class="info-para">Deep learning voice generators frequently synthesize audio at constrained sampling rates (e.g. 16,000 Hz or 24,000 Hz) due to memory requirements. This manifests as a sudden lack of high frequency spectral components (brickwall filter cutoff at 8kHz or 12kHz). The platform monitors the **Spectral Rolloff Boundary** (frequency containing 85% of total signal energy) to find these synthesis sampling filters.</p>
+
+                <h4 style="margin-bottom: 8px; color: var(--color-cyan);">Spectral Centroid and Resonances</h4>
+                <p class="info-para">We calculate the **Spectral Centroid** to represent the center of spectral weight. Vocoder models can yield phase irregularities that compress formant resonances, creating abnormally flat or repetitive spectral centroid pathways across vocalized vowels.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 5: SYSTEM LIMITATIONS & DISCLAIMERS -->
+        <section id="about-section" class="app-section">
+            <div class="panel">
+                <h3 class="panel-title">Forensic Limitations & Legal Disclaimers</h3>
+                
+                <div class="proof-warning">
+                    <strong>CRITICAL CYBERSECURITY PRINCIPLE: Detection is NOT Proof.</strong><br>
+                    VoiceGuard is an investigative and educational tool, not an absolute proof provider. Synthesized voice models continuously evolve, and compression or codec filtering can mask or create artifacts. Verdicts should be aggregated as diagnostic evidence within broader security investigations.
+                </div>
+
+                <h4 style="margin: 20px 0 8px 0; color: var(--color-red-light);">Known Analysis Constraints</h4>
+                <ul class="limits-bullets">
+                    <li><strong>Codec Compression:</strong> Forwarded voice clips (e.g. WhatsApp, Telegram) utilize low-bitrate codecs (Opus/AAC) which strip high frequencies, occasionally producing features similar to synthesis cutoffs.</li>
+                    <li><strong>Acoustic Background Noise:</strong> Strong background hums or transient noise lower the Signal-to-Noise Ratio (SNR), masking vocoder signatures.</li>
+                    <li><strong>Utterance Duration:</strong> Clips under 1.5s do not contain enough speech structures for reliable pitch autocorrelation metrics, resulting in inconclusive statuses.</li>
+                </ul>
+
+                <h4 style="margin: 20px 0 8px 0; color: var(--color-cyan);">Sensitive Data & Privacy Declarations</h4>
+                <p class="info-para">We recognize voice recordings as highly sensitive identifiers. The VoiceGuard platform handles audio files in-memory on the client browser. No audio recordings are permanently stored on backend filesystems. Forensic reports only cache extracted numerical metrics, metadata, and final scores to compile local history registers.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Script assets -->
+    <script src="js/demo-data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        // Trigger resize events for canvases on layout refits
+        window.addEventListener("resize", () => {
+            if (activeAnalysisData) {
+                Charts.drawScoreGauge(document.getElementById("authenticity-gauge"), activeAnalysisData.result.authenticityScore, activeAnalysisData.result.classification);
+                Charts.drawWaveform(document.getElementById("waveform-canvas"), activeAnalysisData.rms, activeAnalysisData.segments, 0, 1, -1, { duration: activeAnalysisData.features.duration });
+                
+                // Draw comparison timbre overlay if mode B was rendered
+                if (document.getElementById("comparison-results-card").style.display === "block") {
+                    Charts.drawTimbreOverlap(document.getElementById("timbre-overlap-canvas"), refFeatures, testFeatures);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
